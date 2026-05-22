@@ -13,15 +13,20 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #0a0d14;
-      --surface:   #111622;
-      --border:    rgba(255,255,255,0.08);
-      --text:      #e8eaf0;
-      --muted:     #8890a4;
-      --accent:    #3b6bff;
-      --accent2:   #6c3bff;
-      --hover-bg:  rgba(59,107,255,0.12);
-      --radius:    18px;
+      /* Paleta navy inspirada no hoffesoft.com.br */
+      --bg:        #08111f;
+      --bg2:       #0d1a2e;
+      --surface:   #112240;
+      --surface2:  #172d50;
+      --border:    rgba(255,255,255,0.07);
+      --border-hi: rgba(255,255,255,0.14);
+      --text:      #e9edf5;
+      --muted:     #7a8fad;
+      --accent:    #1e5cff;
+      --accent2:   #0a3fa8;
+      --accent-hi: #4a7dff;
+      --hover-bg:  rgba(30,92,255,0.1);
+      --radius:    16px;
     }
 
     html, body {
@@ -32,30 +37,38 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Animated background blobs */
+    /* Subtle grid overlay — inspired by enterprise navy sites */
+    body {
+      background-image:
+        linear-gradient(rgba(30,92,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30,92,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* Blobs de luz (mais contidos e navy) */
     body::before, body::after {
       content: '';
       position: fixed;
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.18;
+      filter: blur(100px);
+      opacity: 0.12;
       pointer-events: none;
-      animation: float 8s ease-in-out infinite alternate;
+      animation: float 10s ease-in-out infinite alternate;
     }
     body::before {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, #3b6bff, transparent 70%);
-      top: -100px; left: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #1e5cff, transparent 65%);
+      top: -150px; left: -150px;
     }
     body::after {
-      width: 350px; height: 350px;
-      background: radial-gradient(circle, #6c3bff, transparent 70%);
-      bottom: -80px; right: -80px;
-      animation-delay: -4s;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, #0a3fa8, transparent 65%);
+      bottom: -100px; right: -100px;
+      animation-delay: -5s;
     }
     @keyframes float {
       from { transform: translate(0, 0) scale(1); }
-      to   { transform: translate(30px, 20px) scale(1.08); }
+      to   { transform: translate(25px, 15px) scale(1.06); }
     }
 
     /* Layout */
@@ -65,7 +78,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 40px 20px;
+      padding: 24px 20px;
       position: relative;
       z-index: 1;
     }
@@ -76,25 +89,32 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 28px;
+      gap: 20px;
     }
 
-    /* Avatar */
-    .avatar-wrap {
+    /* ─── Logo / Avatar ─────────────────────────────────── */
+    .avatar-wrap { position: relative; }
+
+    .avatar-ring {
+      width: 108px; height: 108px;
+      border-radius: 50%;
+      padding: 2px;
+      background: linear-gradient(135deg, var(--accent-hi), var(--accent2));
       position: relative;
     }
-    .avatar-ring {
-      width: 104px; height: 104px;
+    .avatar-ring::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
       border-radius: 50%;
-      padding: 3px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 0 32px rgba(59,107,255,0.4);
-      animation: pulse-ring 3s ease-in-out infinite;
+      border: 1px solid rgba(30,92,255,0.2);
+      animation: ping 3s ease-in-out infinite;
     }
-    @keyframes pulse-ring {
-      0%, 100% { box-shadow: 0 0 24px rgba(59,107,255,0.35); }
-      50%       { box-shadow: 0 0 48px rgba(59,107,255,0.6); }
+    @keyframes ping {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50%       { opacity: 0; transform: scale(1.12); }
     }
+
     .avatar {
       width: 100%; height: 100%;
       border-radius: 50%;
@@ -103,30 +123,40 @@
       background: var(--surface);
     }
 
-    /* Header text */
+    /* ─── Header ────────────────────────────────────────── */
     .header { text-align: center; }
+
     .header h1 {
-      font-size: 1.75rem;
+      font-size: 1.8rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #fff 30%, var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .header p {
-      margin-top: 6px;
-      font-size: 0.9rem;
-      color: var(--muted);
-      font-weight: 400;
+      letter-spacing: -0.025em;
+      color: #ffffff;
     }
 
-    /* Links */
+    .header .tagline {
+      margin-top: 8px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 400;
+      letter-spacing: 0.01em;
+    }
+
+    /* Divider linha navy */
+    .divider {
+      width: 48px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+      margin: 0 auto;
+      opacity: 0.6;
+    }
+
+    /* ─── Botões ─────────────────────────────────────────── */
     .links {
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 10px;
     }
 
     .link-btn {
@@ -134,128 +164,149 @@
       align-items: center;
       gap: 16px;
       width: 100%;
-      padding: 18px 22px;
+      padding: 14px 18px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       text-decoration: none;
       color: var(--text);
-      font-size: 0.97rem;
+      font-size: 0.95rem;
       font-weight: 500;
       position: relative;
       overflow: hidden;
       cursor: pointer;
-      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
     }
-    .link-btn::before {
+
+    /* Barra de acento lateral — característica do estilo corporate navy */
+    .link-btn::after {
       content: '';
       position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      left: 0; top: 15%; bottom: 15%;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-hi), var(--accent2));
+      border-radius: 2px;
       opacity: 0;
       transition: opacity 0.2s ease;
     }
+
     .link-btn:hover {
-      transform: translateY(-2px);
-      border-color: rgba(59,107,255,0.5);
-      box-shadow: 0 8px 32px rgba(59,107,255,0.2);
-      background: var(--hover-bg);
+      transform: translateY(-2px) translateX(1px);
+      border-color: var(--border-hi);
+      box-shadow:
+        0 8px 28px rgba(0,0,0,0.35),
+        0 0 0 1px rgba(30,92,255,0.15);
+      background: var(--surface2);
     }
-    .link-btn:hover::before { opacity: 0.05; }
-    .link-btn:active { transform: translateY(0); }
+    .link-btn:hover::after { opacity: 1; }
+    .link-btn:active { transform: translateY(0) translateX(0); }
 
     .link-icon {
-      width: 44px; height: 44px;
-      border-radius: 12px;
-      background: rgba(59,107,255,0.15);
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      background: rgba(30,92,255,0.12);
+      border: 1px solid rgba(30,92,255,0.15);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       position: relative; z-index: 1;
-      transition: background 0.18s ease;
+      transition: background 0.2s ease, border-color 0.2s ease;
     }
-    .link-btn:hover .link-icon { background: rgba(59,107,255,0.3); }
+    .link-btn:hover .link-icon {
+      background: rgba(30,92,255,0.22);
+      border-color: rgba(30,92,255,0.3);
+    }
 
-    .link-info { position: relative; z-index: 1; flex: 1; min-width: 0; }
+    .link-info {
+      position: relative; z-index: 1;
+      flex: 1; min-width: 0;
+    }
     .link-info .label {
       display: block;
-      font-size: 0.78rem;
+      font-size: 0.73rem;
       color: var(--muted);
       font-weight: 400;
       margin-bottom: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
-    .link-info .title { font-weight: 600; }
-
-    /* Sub-hint para o botão de outros segmentos */
+    .link-info .title {
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     .link-info .hint {
       display: block;
-      font-size: 0.72rem;
+      font-size: 0.71rem;
       color: var(--muted);
       font-weight: 400;
       margin-top: 3px;
-      line-height: 1.35;
-      opacity: 0.75;
+      line-height: 1.4;
+      opacity: 0.8;
+      white-space: normal;
     }
 
     .link-arrow {
       margin-left: auto;
       position: relative; z-index: 1;
       color: var(--muted);
-      font-size: 1.1rem;
-      transition: transform 0.18s ease, color 0.18s ease;
+      font-size: 1.2rem;
+      line-height: 1;
+      transition: transform 0.2s ease, color 0.2s ease;
+      flex-shrink: 0;
     }
     .link-btn:hover .link-arrow {
       transform: translateX(3px);
-      color: var(--accent);
+      color: var(--accent-hi);
     }
 
-    /* Toast */
-    .toast {
-      position: fixed;
-      bottom: 28px; left: 50%;
-      transform: translateX(-50%) translateY(60px);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 40px;
-      padding: 10px 22px;
-      font-size: 0.82rem;
-      color: var(--muted);
-      white-space: nowrap;
-      pointer-events: none;
-      transition: transform 0.35s cubic-bezier(.17,.67,.35,1.2), opacity 0.3s;
-      opacity: 0;
-      z-index: 999;
+    /* ─── WhatsApp — destaque verde controlado ──────────── */
+    .btn-wa {
+      border-color: rgba(37,211,102,0.18) !important;
     }
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
+    .btn-wa::after {
+      background: linear-gradient(180deg, #25D366, #1aab52) !important;
+    }
+    .btn-wa:hover {
+      box-shadow:
+        0 8px 28px rgba(0,0,0,0.35),
+        0 0 0 1px rgba(37,211,102,0.15) !important;
     }
 
-    /* Footer */
+
+
+    /* ─── Footer ─────────────────────────────────────────── */
     .footer {
-      font-size: 0.75rem;
-      color: rgba(136,144,164,0.4);
+      font-size: 0.73rem;
+      color: rgba(122,143,173,0.35);
       text-align: center;
+      letter-spacing: 0.02em;
     }
     .footer a {
       color: inherit;
       text-decoration: none;
-      transition: color 0.18s ease;
+      transition: color 0.2s ease;
     }
     .footer a:hover {
-      color: rgba(136,144,164,0.75);
+      color: rgba(122,143,173,0.65);
     }
 
-    /* Ripple */
+    /* ─── Ripple ─────────────────────────────────────────── */
     @keyframes ripple {
       to { transform: scale(4); opacity: 0; }
     }
     .ripple-el {
       position: absolute;
       border-radius: 50%;
-      background: rgba(59,107,255,0.25);
+      background: rgba(30,92,255,0.2);
       pointer-events: none;
-      animation: ripple 0.55s linear forwards;
+      animation: ripple 0.6s linear forwards;
     }
   </style>
 </head>
@@ -274,8 +325,9 @@
     <!-- Header -->
     <div class="header">
       <h1>Hoffesoft</h1>
-      <p>Ecosistema Inteligente para Empresas ✦</p>
+      <p class="tagline">Ecosistema Inteligente para Empresas ✦</p>
     </div>
+
 
     <!-- Links -->
     <div class="links">
@@ -315,7 +367,7 @@
       <!-- Botão 3: Lojas e Varejo -->
       <a id="btn-varejo"
          class="link-btn"
-         href="https://hoffesoft.com.br/controle"
+         href="https://hoffesoft.com.br/varejo"
          target="_blank"
          rel="noopener"
          data-label="Lojas e Varejo"
@@ -330,15 +382,14 @@
 
       <!-- Botão 4: Outros Segmentos / WhatsApp -->
       <a id="btn-whatsapp"
-         class="link-btn"
+         class="link-btn btn-wa"
          href="https://wa.me/558382021030?text=Ol%C3%A1!%20Vim%20pelo%20Instagram%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20sistemas%20da%20Hoffesoft."
          target="_blank"
          rel="noopener"
          data-label="Outros Segmentos"
-         data-key="whatsapp"
-         style="border-color: rgba(37,211,102,0.25);">
-        <div class="link-icon" style="background: rgba(37,211,102,0.15); font-size: 1.5rem;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg">
+         data-key="whatsapp">
+        <div class="link-icon" style="background: rgba(37,211,102,0.1); border-color: rgba(37,211,102,0.18);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
             <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.856L.057 23.215a.75.75 0 0 0 .93.903l5.4-1.498A11.954 11.954 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.686-.528-5.204-1.443l-.372-.22-3.853 1.069 1.036-3.783-.242-.386A9.959 9.959 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
           </svg>
@@ -360,12 +411,11 @@
   </div>
 </div>
 
-<!-- Toast notification -->
-<div class="toast" id="toast"></div>
+
 
 <script>
-  // ─── Rastreamento de cliques (interno — não exibido ao usuário) ───────────
-  const STORE_KEY = 'hf_clicks';
+  // ─── Rastreamento interno (não visível ao usuário) ─────────────────────────
+  const STORE_KEY = 'hf_clicks_v2';
 
   function getClicks() {
     try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }
@@ -380,7 +430,7 @@
     return data[key];
   }
 
-  // ─── Efeito ripple ────────────────────────────────────────────────────────
+  // ─── Efeito ripple ─────────────────────────────────────────────────────────
   function addRipple(btn, e) {
     const rect = btn.getBoundingClientRect();
     const size = Math.max(rect.width, rect.height);
@@ -390,39 +440,25 @@
     el.className = 'ripple-el';
     el.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${y}px`;
     btn.appendChild(el);
-    setTimeout(() => el.remove(), 600);
+    setTimeout(() => el.remove(), 650);
   }
 
-  // ─── Toast ────────────────────────────────────────────────────────────────
-  let toastTimer;
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
-  }
 
-  // ─── Bind em todos os botões ──────────────────────────────────────────────
+
+  // ─── Bind ──────────────────────────────────────────────────────────────────
   document.querySelectorAll('.link-btn').forEach(btn => {
     btn.addEventListener('click', function(e) {
       addRipple(this, e);
       const key   = this.dataset.key;
       const label = this.dataset.label;
-      saveClick(key); // salva internamente, sem exibir ao usuário
-      showToast('✓ Abrindo ' + label + '…');
+      saveClick(key);
 
-      // Envia evento para analytics (se ativo)
-      if (typeof window.umami !== 'undefined') {
-        window.umami.track('click_' + key);
-      }
-      if (typeof window.gtag !== 'undefined') {
-        window.gtag('event', 'click', { event_category: 'bio_link', event_label: key });
-      }
+      if (typeof window.umami !== 'undefined') window.umami.track('click_' + key);
+      if (typeof window.gtag !== 'undefined')  window.gtag('event', 'click', { event_category: 'bio_link', event_label: key });
     });
   });
 
-  // ─── Painel de stats interno (console apenas) — rode hf_stats() no console
+  // ─── Debug console: hf_stats() ─────────────────────────────────────────────
   window.hf_stats = function() {
     const d = getClicks();
     console.table(
